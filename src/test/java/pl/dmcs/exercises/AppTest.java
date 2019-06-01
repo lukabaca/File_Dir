@@ -12,11 +12,24 @@ import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AppTest {
+
     @Test
-    public void useTmpFile(@TempDir Path tempDir) throws IOException {
-        Path file = tempDir.resolve("a.txt");
-        Files.write(file, "hello".getBytes());
-        assertEquals(asList("hello"), Files.readAllLines(file));
+    public void testNumberOfCharactersInFile(@TempDir Path tempDir) {
+        checkNumberOfCharactersInFile(tempDir, 0, "");
+        checkNumberOfCharactersInFile(tempDir, 5, "hello");
+        checkNumberOfCharactersInFile(tempDir, 1, "a");
+        checkNumberOfCharactersInFile(tempDir, 4, "1234");
+    }
+
+    private void checkNumberOfCharactersInFile(@TempDir Path tempDir, int expectedNumberOfCharacters, String fileContent)  {
+        try {
+            FileProcessor fileProcessor = new FileProcessor();
+            Path file = tempDir.resolve("a.txt");
+            Files.write(file, fileContent.getBytes());
+            assertEquals(expectedNumberOfCharacters, fileProcessor.getNumberOfCharactersInFile(file));
+        } catch (IOException e) {
+
+        }
     }
 
 }
