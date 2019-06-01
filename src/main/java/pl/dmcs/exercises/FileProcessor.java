@@ -6,12 +6,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class FileProcessor {
-    public int getNumberOfCharactersInFile(Path filePath) {
+    public int getNumberOfCharactersInFile(String filePath) {
         try {
-            String data = new String(Files.readAllBytes(filePath));
+            Path path = Paths.get(filePath);
+            String data = new String(Files.readAllBytes(path));
             return data.length();
         } catch (IOException e) {
-            e.printStackTrace();
             return -1;
         }
     }
