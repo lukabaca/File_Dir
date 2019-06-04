@@ -32,6 +32,16 @@ public class DirProcessorTest {
     }
 
     @Test
+    void testNumberOfCharactersForNotExistingDirectory() {
+        DirProcessor dirProcessor = new DirProcessor();
+        String absolutePath = resourceDirectory.toFile().getAbsolutePath();
+        FileProcessor fileProcessor = mock(FileProcessor.class);
+        setBehaviorForFileProcessor(fileProcessor, absolutePath + "/dir2/a.txt", 50);
+        dirProcessor.setFileProcessor(fileProcessor);
+        assertEquals(-1, dirProcessor.getNumberOfCharactersInAllFilesInDirectory(absolutePath + "/dir2"));
+    }
+
+    @Test
     void testNumberOfCharactersInDirectory(@TempDir Path tempDir) throws IOException {
         DirProcessor dirProcessor = new DirProcessor();
         Path file = tempDir.resolve("a.txt");

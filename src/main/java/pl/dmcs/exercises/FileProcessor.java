@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class FileProcessor {
+
     public int getNumberOfCharactersInFile(String filePath) {
         try {
             Path path = Paths.get(filePath);
