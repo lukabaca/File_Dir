@@ -1,13 +1,23 @@
 package pl.dmcs.exercises;
 import org.apache.commons.io.FilenameUtils;
 import java.io.File;
+import java.util.List;
 
 
 public class DirProcessor {
 
+    private FileProcessor fileProcessor;
+
+    public FileProcessor getFileProcessor() {
+        return fileProcessor;
+    }
+
+    public void setFileProcessor(FileProcessor fileProcessor) {
+        this.fileProcessor = fileProcessor;
+    }
+
     public int getNumberOfCharactersInAllFilesInDirectory(String directoryPath) {
         try {
-            FileProcessor fileProcessor = new FileProcessor();
             File folder = new File(directoryPath);
             File[] filesInFolder = folder.listFiles();
             int sum = 0;
