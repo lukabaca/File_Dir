@@ -1,7 +1,6 @@
 package pl.dmcs.exercises;
 import org.apache.commons.io.FilenameUtils;
 import java.io.File;
-import java.util.List;
 
 
 public class DirProcessor {

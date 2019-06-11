@@ -12,6 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FileProcessorTest {
 
+    private FileProcessor fileProcessor = new FileProcessor();
+
     @Test
     void testNumberOfCharactersInFile(@TempDir Path tempDir) {
         checkNumberOfCharactersInFile(tempDir, 0, "");
@@ -22,7 +24,6 @@ public class FileProcessorTest {
 
     private void checkNumberOfCharactersInFile(@TempDir Path tempDir, int expectedNumberOfCharacters, String fileContent) {
         try {
-            FileProcessor fileProcessor = new FileProcessor();
             Path file = tempDir.resolve("a.txt");
             Files.write(file, fileContent.getBytes());
             assertEquals(expectedNumberOfCharacters, fileProcessor.getNumberOfCharactersInFile(file.toString()));

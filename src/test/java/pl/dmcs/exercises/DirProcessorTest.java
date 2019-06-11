@@ -1,6 +1,5 @@
 package pl.dmcs.exercises;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -8,32 +7,29 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 public class DirProcessorTest {
 
     private final Path resourceDirectory = Paths.get("src","test","resources");
+    private DirProcessor dirProcessor = new DirProcessor();
 
     @Test
     void testNumberOfCharactersInPhysicalDirectory() {
-        DirProcessor dirProcessor = new DirProcessor();
         String absolutePath = resourceDirectory.toFile().getAbsolutePath();
         FileProcessor fileProcessor = mock(FileProcessor.class);
         setBehaviorForFileProcessor(fileProcessor, absolutePath + "/dir/a.txt", 50);
         setBehaviorForFileProcessor(fileProcessor, absolutePath + "/dir/b.txt", 20);
-        setBehaviorForFileProcessor(fileProcessor, absolutePath + "/dir/c.doc", 300);
         dirProcessor.setFileProcessor(fileProcessor);
         assertEquals(70, dirProcessor.getNumberOfCharactersInAllFilesInDirectory(absolutePath + "/dir"));
+        verify(fileProcessor, times(2)).getNumberOfCharactersInFile(anyString());
     }
 
     @Test
     void testNumberOfCharactersForNotExistingDirectory() {
-        DirProcessor dirProcessor = new DirProcessor();
         String absolutePath = resourceDirectory.toFile().getAbsolutePath();
         FileProcessor fileProcessor = mock(FileProcessor.class);
         setBehaviorForFileProcessor(fileProcessor, absolutePath + "/dir2/a.txt", 50);
@@ -43,9 +39,8 @@ public class DirProcessorTest {
 
     @Test
     void testNumberOfCharactersInDirectory(@TempDir Path tempDir) throws IOException {
-        DirProcessor dirProcessor = new DirProcessor();
-        Path file = tempDir.resolve("a.txt");
-        Path file2 = tempDir.resolve("b.txt");
+        Path file = tempDir.resolve("c.txt");
+        Path file2 = tempDir.resolve("d.txt");
         Files.write(file, "".getBytes());
         Files.write(file2, "".getBytes());
         FileProcessor fileProcessor = mock(FileProcessor.class);
